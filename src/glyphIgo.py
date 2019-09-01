@@ -56,7 +56,7 @@ import codecs
 import collections
 import fontforge
 import hashlib
-import htmlentitydefs
+import html.entities
 import os
 import re
 import sys
@@ -908,9 +908,9 @@ class GlyphIgo:
                     return "<"
                 if (c == "gt"):
                     return ">"
-                if (c in htmlentitydefs.name2codepoint):
+                if (c in html.entities.name2codepoint):
                     # named entity
-                    return unichr(htmlentitydefs.name2codepoint[c])
+                    return unichr(html.entities.name2codepoint[c])
                 else:
                     # TODO this is ugly
                     if ((c[0] == "#") and len(c) > 1):
