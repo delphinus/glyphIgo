@@ -792,7 +792,7 @@ class GlyphIgo:
 
     def __print_info(self, s):
         if not (("quiet" in self.__args) or ("nohumanreadable" in self.__args)):
-            print "[INFO] %s" % (s)
+            print(f"[INFO] {s}")
 
     def __get_ebook_char_list(self):
         # TODO allow full EPUB parsing
@@ -953,7 +953,9 @@ class GlyphIgo:
     def __print_block_list(self):
         self.__print_info("Range\tStart\tStop\tStart\tStop\tName")
         for b in self.UNICODE_BLOCKS:
-            print "0x%s-0x%s\t0x%s\t0x%s\t%s\t%s\t%s" % (b[0], b[1], b[0], b[1], int(b[0], 16), int(b[1], 16), b[2])
+            print(
+                f"0x{b[0]}-0x{b[1]}\t0x{b[1]}\t0x{b[1]}\t{int(b[0], 16)}\t{int(b[1], 16)}\t{b[2]}"
+            )
 
     # helper: pretty print char list
     def __print_char_list(self, chars):
@@ -977,7 +979,7 @@ class GlyphIgo:
         if ("quiet" in self.__args):
             for c in chars:
                 decCodePoint = ord(c[0])
-                print "%s" % (decCodePoint)
+                print(decCodePoint)
         else:
             for c in chars:
                 name = unicodedata.name(c[0], 'UNKNOWN NAME')
@@ -986,10 +988,12 @@ class GlyphIgo:
                 if (type(c) is list):
                     # c = [ char, count ]
                     count = c[1]
-                    print "'%s'\t%s\t%s\t%s\t%s" % (escape(c[0]), decCodePoint, hexCodePoint, name, count)
+                    print(
+                        f"'{escape(c[0])}'\t{decCodePoint}\t{hexCodePoint}\t{name}\t{count}"
+                    )
                 else:
                     # c is a char
-                    print "'%s'\t%s\t%s\t%s" % (escape(c[0]), decCodePoint, hexCodePoint, name)
+                    print(f"'{escape(c[0])}'\t{decCodePoint}\t{hexCodePoint}\t{name}")
 
     # helper: get the file path for output path
     # either from "output" or from the original input file + prefix
@@ -1065,20 +1069,20 @@ class GlyphIgo:
         nfc = unicodedata.normalize("NFC", char)
         nfd = unicodedata.normalize("NFD", char)
         if (short):
-            print char + "\t" + name + " (U+" + str(hexCodepoint).upper().replace("0X", "") + ")"
+            print(f"{char}\t{name} (U+{str(hexCodepoint).upper().replace('0X', '')})")
         else:
-            print "Name          " + name 
-            print "Character     " + char 
-            print "Dec Codepoint " + str(decCodepoint)
-            print "Hex Codepoint " + str(hexCodepoint)
-            print "Lowercase     " + lower
-            print "Uppercase     " + upper
-            print "Category      " + category
-            print "Bidirectional " + bidirectional
-            print "Mirrored      " + str(mirrored)
-            print "NFC           " + nfc
-            print "NFD           " + nfd
-            print "============="
+            print(f"Name          {name}")
+            print(f"Character     {char}")
+            print(f"Dec Codepoint {str(decCodepoint)}")
+            print(f"Hex Codepoint {str(hexCodepoint)}")
+            print(f"Lowercase     {lower}")
+            print(f"Uppercase     {upper}")
+            print(f"Category      {category}")
+            print(f"Bidirectional {bidirectional}")
+            print(f"Mirrored      {str(mirrored)}")
+            print(f"NFC           {nfc}")
+            print(f"NFD           {nfd}")
+            print("=============")
 
     # helper: perform a lookup for the given query
     def __lookup_character(self):
@@ -1211,7 +1215,7 @@ class GlyphIgo:
             self.__print_error(str(e))
             return CustomParser.EXIT_CODE_COMMAND_FAILED
         self.__print_info("Number of characters in '%s':" % (ebook_name))
-        print total
+        print(total)
         return CustomParser.EXIT_CODE_OK
 
     def __do_list(self):
