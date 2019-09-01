@@ -831,7 +831,7 @@ class GlyphIgo:
         font = fontforge.open(self.__args.font)
         for x in font.glyphs():
             if x.unicode > -1:
-                c = unichr(x.unicode)
+                c = chr(x.unicode)
                 if only_chars:
                     chars.append(c)
                 else:
@@ -849,11 +849,11 @@ class GlyphIgo:
         for g in text.splitlines():
             if (len(g) > 0) and (g[0] != "#"):
                 if (len(g) > 2) and (g[0:2] == "0x"):
-                    c = unichr(int(g[2:], 16))
+                    c = chr(int(g[2:], 16))
                 elif (len(g) > 1) and (g[0] == "x"):
-                    c = unichr(int(g[1:], 16))
+                    c = chr(int(g[1:], 16))
                 else:
-                    c = unichr(int(g))
+                    c = chr(int(g))
                 if only_chars:
                     chars.append(c)
                 else:
@@ -899,7 +899,7 @@ class GlyphIgo:
     def __get_range(self, start, stop):
         chars = []
         for i in range(start, stop + 1):
-            chars.append([unichr(i), 1])
+            chars.append([chr(i), 1])
         return chars
 
     # helper: clean text and produce a list of character,
@@ -925,7 +925,7 @@ class GlyphIgo:
                     return ">"
                 if c in html.entities.name2codepoint:
                     # named entity
-                    return unichr(html.entities.name2codepoint[c])
+                    return chr(html.entities.name2codepoint[c])
                 else:
                     # TODO this is ugly
                     if (c[0] == "#") and len(c) > 1:
@@ -933,14 +933,14 @@ class GlyphIgo:
                         if (c[1] == "x") and (len(c) > 2):
                             try:
                                 i = int(c[2:], 16)
-                                return unichr(i)
+                                return chr(i)
                             except:
                                 # error
                                 return ""
                         else:
                             try:
                                 i = int(c[1:])
-                                return unichr(i)
+                                return chr(i)
                             except:
                                 # error
                                 return ""
@@ -1117,7 +1117,7 @@ class GlyphIgo:
                     effective_qw.append(q)
             # Unicode codepoints range from 0 to 0x10FFFF = 1114111
             for i in range(1114112):
-                c = unichr(i)
+                c = chr(i)
                 name = unicodedata.name(c, "UNKNOWN").split(" ")
                 is_match = True
                 for e in effective_qw:
@@ -1133,13 +1133,13 @@ class GlyphIgo:
                 results = ["" + query]
             elif re.match(self.PATTERN_HEX_0x, query) != None:
                 # hex
-                results = [unichr(int(query[2:], 16))]
+                results = [chr(int(query[2:], 16))]
             elif re.match(self.PATTERN_HEX_x, query) != None:
                 # hex
-                results = [unichr(int(query[1:], 16))]
+                results = [chr(int(query[1:], 16))]
             elif re.match(self.PATTERN_DEC, query) != None:
                 # decimal
-                results = [unichr(int(query))]
+                results = [chr(int(query))]
             else:
                 # exact name
                 results = [unicodedata.lookup(query)]
